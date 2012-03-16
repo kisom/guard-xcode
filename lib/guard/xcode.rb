@@ -20,6 +20,7 @@ module Guard
       
       if true == options[:all]
         @all = true
+        @target = nil
       else
         @all = false
       end
@@ -38,7 +39,6 @@ module Guard
     end
 
     def get_build_line
-      res = true
       build_line = 'xcodebuild '
 
       ## configure build options
@@ -71,6 +71,8 @@ module Guard
 
     def run_build(build_line)
       ## run the build
+      alerts = []
+      
       unless @quiet
         Notifier.notify("kicking off build with:\n#{build_line}")
       end
@@ -85,13 +87,15 @@ module Guard
 
       if output =~ /errors? generated/
         Notifier.notify("xcode: errors in build!")
-        res = false
+        alerts.push :errors
       end
 
       if output =~ /warning/
         Notifier.notify("xcode: warnings in build!")
-        res = false
+        alerts.push :warnings
       end
+
+      alerts
     end
 
     # Call once when Guard starts. Please override initialize method to init stuff.
