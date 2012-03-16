@@ -2,3 +2,4 @@
 .bundle
 Gemfile.lock
 pkg/*
+test/GuardXcodeTest/build/GuardXcodeTest.build/Release/GuardXcodeTest.build
