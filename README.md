@@ -35,5 +35,5 @@ The Xcode Guard supports the following options:
 * `:configuration` - string defining the build configuration to use
 * `:scheme` - string defining the build scheme to use
 * `:arch` - string defining the arch to build for
-* `:all` - boolean indicated whether to build all targets
+* `:all` - boolean indicated whether to build all targets. If true, overrides :target.
 * `:quiet` - only notify on errors / warnings
