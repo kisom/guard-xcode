@@ -14,6 +14,7 @@ module Guard
       @target = options[:target]
       @config = options[:configuration]
       @scheme = options[:scheme]
+      @quit = false unless nil == options[:quiet] then true
 
       unless true == options['scheme']
         @clean = true
@@ -67,9 +68,16 @@ module Guard
 
       build_line += "build"
 
-      Notifier.notify("kicking off build with:\n#{build_line}")
+      unless @quiet
+        Notifier.notify("kicking off build with:\n#{build_line}")
+      end
+
       output = `#{build_line}`
-      Notifier.notify("build finished.")
+
+      unless @quiet
+        Notifier.notify("build finished.")
+      end
+      
       puts output
 
       if output =~ /error/
