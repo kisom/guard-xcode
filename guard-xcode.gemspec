@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/kisom/guard-xcode"
   s.summary     = "Run Xcode builds when source files change."
   s.licenses    = ["ISC", "public domain"]
-  s.description = %q{TODO: Write a gem description}
+  s.description = "Build an Xcode project when source files change."
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
