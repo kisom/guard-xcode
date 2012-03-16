@@ -14,9 +14,14 @@ module Guard
       @target = options[:target]
       @config = options[:configuration]
       @scheme = options[:scheme]
-      @quit = false unless nil == options[:quiet] then true
 
-      unless true == options['scheme']
+      if true == options[:quiet]
+        @quiet = true
+      else
+        @quiet = false
+      end
+
+      if true == options['clean']
         @clean = true
       else
         @clean = false
@@ -50,6 +55,7 @@ module Guard
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_change(paths)
       build_line = 'xcodebuild '
+
       unless nil == @configuration
         build_line += "-configuration #{@configuration} "
       end
@@ -62,7 +68,7 @@ module Guard
         build_line += "-scheme #{@scheme} "
       end
 
-      unless false == @scheme
+      unless false == @clean
         build_line += "clean "
       end
 
@@ -77,15 +83,15 @@ module Guard
       unless @quiet
         Notifier.notify("build finished.")
       end
-      
+
       puts output
 
       if output =~ /error/
-        Notifier.notify("errors in build!")
+        Notifier.notify("xcode: errors in build!")
       end
 
       if output =~ /warning/
-        Notifier.notify("warnings in build!")
+        Notifier.notify("xcode: warnings in build!")
       end
 
     end
