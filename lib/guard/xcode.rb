@@ -66,15 +66,18 @@ module Guard
       end
 
       build_line += "build"
+
+      Notifier.notify("kicking off build with:\n#{build_line}")
       output = `#{build_line}`
+      Notifier.notify("build finished.")
       puts output
 
       if output =~ /error/
-        puts "*** errors in build!"
+        Notifier.notify("errors in build!")
       end
 
       if output =~ /warning/
-        puts "*** warnings in build!"
+        Notifier.notify("warnings in build!")
       end
 
     end
