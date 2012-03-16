@@ -1,5 +1,7 @@
 # template Xcode guard
 
+notification :growl
+
 guard :xcode, :configuration => 'Debug', :target => 'MyApp' do
     watch(/^.+\.[hmc]$/)
 end
