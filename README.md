@@ -33,9 +33,9 @@ See also the [Growl notes](#growl-notes) in this document.
 
 The Xcode Guard supports the following options:
 
-0. `:target` - string defining the target to build (i.e. MyClassTests or MyClass)
-0. `:configuration` - string defining the build configuration to use
-0. `:scheme` - string defining the build scheme to use
-0. `:arch` - string defining the arch to build for
-0. `:all` - boolean indicated whether to build all targets
-0. `:quiet` - only notify on errors / warnings
+* `:target` - string defining the target to build (i.e. MyClassTests or MyClass)
+* `:configuration` - string defining the build configuration to use
+* `:scheme` - string defining the build scheme to use
+* `:arch` - string defining the arch to build for
+* `:all` - boolean indicated whether to build all targets
+* `:quiet` - only notify on errors / warnings
