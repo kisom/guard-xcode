@@ -3,6 +3,8 @@ require 'guard/guard'
 
 module Guard
   class Xcode < ::Guard::Guard
+    ## 
+    # Build an Xcode project on
 
     attr_reader :options
 
@@ -35,13 +37,13 @@ module Guard
       end
     end
 
-    def build
+    def get_build_line
       res = true
       build_line = 'xcodebuild '
 
       ## configure build options
-      unless nil == @configuration
-        build_line += "-configuration #{@configuration} "
+      unless nil == @config
+        build_line += "-configuration #{@config} "
       end
 
       unless nil == @target
@@ -65,7 +67,9 @@ module Guard
       end
 
       build_line += "build"
+    end
 
+    def run_build(build_line)
       ## run the build
       unless @quiet
         Notifier.notify("kicking off build with:\n#{build_line}")
@@ -79,7 +83,7 @@ module Guard
 
       puts output
 
-      if output =~ /error/
+      if output =~ /errors? generated/
         Notifier.notify("xcode: errors in build!")
         res = false
       end
@@ -88,8 +92,6 @@ module Guard
         Notifier.notify("xcode: warnings in build!")
         res = false
       end
-
-      return res
     end
 
     # Call once when Guard starts. Please override initialize method to init stuff.
@@ -112,21 +114,21 @@ module Guard
     # This method should be principally used for long action like running all specs/tests/...
     # @raise [:task_has_failed] when run_all has failed
     def run_all
-      return build
+      run_build(get_build_line)
     end
 
     # Called on file(s) modifications that the Guard watches.
     # @param [Array<String>] paths the changes files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_change(paths)
-      return build
+      run_build(get_build_line)
     end
 
     # Called on file(s) deletions that the Guard watches.
     # @param [Array<String>] paths the deleted files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_deletion(paths)
-      return build
+      run_build(get_build_line)
     end
 
   end
