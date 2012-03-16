@@ -2,7 +2,9 @@ require 'guard'
 require 'guard/guard'
 
 module Guard
-  class Xcode < Guard
+  class Xcode < ::Guard::Guard
+
+    attr_reader :options
 
     # Initialize a Guard.
     # @param [Array<Guard::Watcher>] watchers the Guard file watchers
@@ -10,10 +12,10 @@ module Guard
     def initialize(watchers = [], options = {})
       super
       @target = options[:target]
-      @config = option[:configuration]
-      @scheme = option[:scheme]
+      @config = options[:configuration]
+      @scheme = options[:scheme]
 
-      unless true == option['scheme']
+      unless true == options['scheme']
         @clean = true
       else
         @clean = false
@@ -69,6 +71,8 @@ module Guard
 
       if output =~ /error/
         puts "*** errors in build!"
+      end
+
       if output =~ /warning/
         puts "*** warnings in build!"
       end
