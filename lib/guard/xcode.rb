@@ -86,13 +86,13 @@ module Guard
       end
 
       if not 0 == res or output =~ /errors? generated/
-        UI.warn "guard-xcode: errors in build" unless @suppress_all_output
+        UI.info "guard-xcode: errors in build" unless @suppress_all_output
         Notifier.notify("guard-xcode: errors in build!") unless @suppress_all_output
         alerts.push :errors
       end
 
       if output =~ /warning/
-        UI.warn "guard-xcode: warnings in build" unless @suppress_all_output
+        UI.info "guard-xcode: warnings in build" unless @suppress_all_output
         Notifier.notify("guard-xcode: warnings in build!") unless @suppress_all_output
         alerts.push :warnings
       end
