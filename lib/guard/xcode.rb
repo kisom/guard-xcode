@@ -3,8 +3,10 @@ require 'guard/guard'
 
 module Guard
   class Xcode < ::Guard::Guard
-    ## 
-    # Build an Xcode project on
+    # Build an Xcode project on file change
+    #
+    # Should be initialised with 'guard xcode' in the target project's 
+    # directory
 
     attr_reader :options
 
@@ -39,6 +41,7 @@ module Guard
     end
 
     def get_build_line
+      # generate the build line from the initialised options
       build_line = 'xcodebuild '
 
       ## configure build options
@@ -70,7 +73,12 @@ module Guard
     end
 
     def run_build(build_line)
-      ## run the build
+      # run the build, returning a list of alerts
+      #
+      # returns:
+      # a list of symbols; possible values include :errors and :warnings which
+      # indicate the build included warnings or errors. Returning an empty list
+      # means no errors were detected.
       alerts = []
       
       unless @quiet
