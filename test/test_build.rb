@@ -5,7 +5,8 @@ class TestBuild < Test::Unit::TestCase
   def setup
     @xcode_test_path = 'test/GuardXcodeTest'
     @toplevel = Dir.pwd
-    @builder = Guard::Xcode.new [], :quiet => true, :clean => true, :all => true
+    @builder = Guard::Xcode.new [], :quiet => true, :clean => true, 
+                                    :all => true, :suppress_all_output => true
   end
 
   def teardown
