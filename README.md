@@ -27,7 +27,8 @@ gem "growl"
 ```
 
 Run `bundle install` and run `guard xcode` in your project root. You may wish
-to review the generate Guardfile.
+to review the generate Guardfile. At the minimum, you should change the target
+to reflect the target you want to build on change (or use `:all => true`).
 
 If you want growl support, you'll need to install [GrowlNotify](http://growl.info/downloads#generaldownloads).
 See also the [Growl notes](#growl-notes) in this document.
