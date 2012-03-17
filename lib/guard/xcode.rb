@@ -92,7 +92,9 @@ module Guard
         Notifier.notify("build finished.")
       end
 
-      puts output
+      unless @quiet
+        puts output
+      end
 
       if not 0 == res or output =~ /errors? generated/
         Notifier.notify("xcode: errors in build!")
