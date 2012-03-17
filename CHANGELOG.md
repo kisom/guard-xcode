@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.3
+* Add UI.info and UI.warn to code
+
 ## 1.0.2
 * Fix formatting in `README.md`
 * Add CHANGELOG, and update Gemspec to include it in rdoc
