@@ -86,6 +86,7 @@ module Guard
       end
 
       output = `#{build_line}`
+      res = $?
 
       unless @quiet
         Notifier.notify("build finished.")
@@ -93,7 +94,7 @@ module Guard
 
       puts output
 
-      if output =~ /errors? generated/
+      if not 0 == res or output =~ /errors? generated/
         Notifier.notify("xcode: errors in build!")
         alerts.push :errors
       end
