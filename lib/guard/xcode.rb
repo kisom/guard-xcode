@@ -82,6 +82,7 @@ module Guard
       alerts = []
       
       unless @quiet
+        UI.info "guard-xcode: starting build"
         Notifier.notify("kicking off build with:\n#{build_line}")
       end
 
@@ -89,6 +90,7 @@ module Guard
       res = $?
 
       unless @quiet
+        UI.info "guard-xcode: build finished."
         Notifier.notify("build finished.")
       end
 
@@ -97,12 +99,14 @@ module Guard
       end
 
       if not 0 == res or output =~ /errors? generated/
-        Notifier.notify("xcode: errors in build!")
+        UI.warn "guard-xcode: errors in build"
+        Notifier.notify("guard-xcode: errors in build!")
         alerts.push :errors
       end
 
       if output =~ /warning/
-        Notifier.notify("xcode: warnings in build!")
+        UI.warn "guard-xcode: warnings in build"
+        Notifier.notify("guard-xcode: warnings in build!")
         alerts.push :warnings
       end
 
