@@ -23,7 +23,9 @@ Create a Gemfile in your project root:
 source :rubygems
 
 gem "guard-xcode"
+gem "guard"
 gem "growl"
+gem "rb-readline"   # improved interface for MRI
 ```
 
 Run `bundle install` and run `guard xcode` in your project root. You may wish
