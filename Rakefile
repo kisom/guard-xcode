@@ -8,7 +8,7 @@ end
 
 RDoc::Task.new do |rdoc|
   rdoc.main = "README.rdoc"
-  rdoc.rdoc_files.include("README.rdoc", "lib   /*.rb")
+  rdoc.rdoc_files.include("lib/*.rb")
 end
 
 desc "Run tests"
