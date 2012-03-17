@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.5
+* change all calls to UI.warn to UI.info
+
 ## 1.0.4
 * add console output for build start and finish to show build occurring
 * add `gem "guard"` and `gem "rb-readline"` to Gemfile in README.md
