@@ -18,6 +18,7 @@ module Guard
       @config = options[:configuration]
       @scheme = options[:scheme]
       @arch = options[:arch]
+      @sdk = options[:sdk]
       @suppress_all_output = options[:suppress_all_output] or false
       @all = options[:all] or false
       @target = options[:target] unless @all
@@ -49,6 +50,10 @@ module Guard
 
       unless nil == @arch
         build_line += "-arch #{@arch} "
+      end
+      
+      unless nil == @sdk
+        build_line += "-sdk #{@sdk} "
       end
       
       if @clean
