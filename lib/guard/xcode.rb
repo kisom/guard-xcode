@@ -70,7 +70,7 @@ module Guard
 
       unless @quiet or @suppress_all_output
         UI.info "guard-xcode: starting build"
-        Notifier.notify("kicking off build with:\n#{build_line}")
+        Notifier.notify("kicking off build with:\n#{build_line}", :image => :pending)
       end
 
       output = `#{build_line} 2>&1`
@@ -87,13 +87,13 @@ module Guard
 
       if not 0 == res or output =~ /errors? generated/
         UI.info "guard-xcode: Errors in build." unless @suppress_all_output
-        Notifier.notify("Errors in build.") unless @suppress_all_output
+        Notifier.notify("Errors in build.", :image => :failed) unless @suppress_all_output
         alerts.push :errors
       end
 
       if output =~ /warnings? generated/
         UI.info "guard-xcode: Warnings in build." unless @suppress_all_output
-        Notifier.notify("Warnings in build.") unless @suppress_all_output
+        Notifier.notify("Warnings in build.", :image => :failed) unless @suppress_all_output
         alerts.push :warnings
       end
 
