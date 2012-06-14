@@ -18,6 +18,7 @@ module Guard
       @config = options[:configuration]
       @scheme = options[:scheme]
       @arch = options[:arch]
+      @sdk = options[:sdk]
       @suppress_all_output = options[:suppress_all_output] or false
       @all = options[:all] or false
       @target = options[:target] unless @all
@@ -51,6 +52,10 @@ module Guard
         build_line += "-arch #{@arch} "
       end
       
+      unless nil == @sdk
+        build_line += "-sdk #{@sdk} "
+      end
+      
       if @clean
         build_line += "clean "
       end
@@ -70,15 +75,15 @@ module Guard
 
       unless @quiet or @suppress_all_output
         UI.info "guard-xcode: starting build"
-        Notifier.notify("kicking off build with:\n#{build_line}")
+        Notifier.notify("kicking off build with:\n#{build_line}", :image => :pending)
       end
 
       output = `#{build_line} 2>&1`
       res = $?
 
-      unless @quiet or @suppress_all_output
-        UI.info "guard-xcode: build finished."
-        Notifier.notify("build finished.")
+      if not ((not 0 == res or output =~ /errors? generated/) or (output =~ /warnings? generated/))
+        UI.info "guard-xcode: Build succeeded!" unless @quiet or @suppress_all_output
+        Notifier.notify("Build succeeded!") unless @quiet or @suppress_all_output
       end
 
       unless @quiet or @suppress_all_output
@@ -86,14 +91,14 @@ module Guard
       end
 
       if not 0 == res or output =~ /errors? generated/
-        UI.info "guard-xcode: errors in build" unless @suppress_all_output
-        Notifier.notify("guard-xcode: errors in build!") unless @suppress_all_output
+        UI.info "guard-xcode: Errors in build." unless @suppress_all_output
+        Notifier.notify("Errors in build.", :image => :failed) unless @suppress_all_output
         alerts.push :errors
       end
 
-      if output =~ /warning/
-        UI.info "guard-xcode: warnings in build" unless @suppress_all_output
-        Notifier.notify("guard-xcode: warnings in build!") unless @suppress_all_output
+      if output =~ /warnings? generated/
+        UI.info "guard-xcode: Warnings in build." unless @suppress_all_output
+        Notifier.notify("Warnings in build.", :image => :failed) unless @suppress_all_output
         alerts.push :warnings
       end
 
@@ -127,14 +132,14 @@ module Guard
     # Called on file(s) modifications that the Guard watches.
     # @param [Array<String>] paths the changes files or paths
     # @raise [:task_has_failed] when run_on_change has failed
-    def run_on_change(paths)
+    def run_on_changes(paths)
       run_build(get_build_line)
     end
 
     # Called on file(s) deletions that the Guard watches.
     # @param [Array<String>] paths the deleted files or paths
     # @raise [:task_has_failed] when run_on_change has failed
-    def run_on_deletion(paths)
+    def run_on_removals(paths)
       run_build(get_build_line)
     end
 
