@@ -8,6 +8,12 @@ class XcodeTestBuildLines < Test::Unit::TestCase
     assert target == targetGuard.get_build_line
   end
 
+  def test_workspace_build_line
+    workspace = 'xcodebuild -workspace MyApp build'
+    workspaceGuard = Guard::Xcode.new [], :workspace =>'MyApp'
+    assert workspace == workspaceGuard.get_build_line
+  end
+
   def test_config_build_line
     config = 'xcodebuild -configuration MyConfig build'
     configGuard = Guard::Xcode.new [], :configuration => 'MyConfig'

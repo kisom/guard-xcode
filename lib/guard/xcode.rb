@@ -22,6 +22,7 @@ module Guard
       @suppress_all_output = options[:suppress_all_output] or false
       @all = options[:all] or false
       @target = options[:target] unless @all
+      @workspace = options[:workspace] unless @all
       @quiet = options[:quiet] or false
       @clean = options[:clean] or false
 
@@ -38,6 +39,10 @@ module Guard
 
       unless nil == @target
         build_line += "-target #{@target} "
+      end
+
+      unless nil == @workspace
+        build_line += "-workspace #{@workspace} "
       end
 
       if @all
