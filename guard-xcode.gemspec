@@ -24,6 +24,9 @@ Gem::Specification.new do |s|
     "README.md"
   ]
 
+  # signing key and certificate chain
+  s.signing_key = '/mnt/ironkey_usb/rubygems/gem-private_key.pem'
+  s.cert_chain  = ['gem-public_cert.pem']
+
   s.add_runtime_dependency "guard"
-  #s.add_development_dependency "rspec"
 end
