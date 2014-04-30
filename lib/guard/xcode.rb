@@ -25,7 +25,9 @@ module Guard
       @workspace = options[:workspace] unless @all
       @quiet = options[:quiet] or false
       @clean = options[:clean] or false
-
+      @destination = options[:destination] unless @all
+      @platform = options[:platform] unless @all
+      @test = options[:test] or false
     end
 
     def get_build_line
@@ -60,12 +62,24 @@ module Guard
       unless nil == @sdk
         build_line += "-sdk #{@sdk} "
       end
+
+      unless nil == @destination
+        build_line += "-destination #{@destination} "
+      end
       
+      unless nil == @platform
+        build_line += "-platform #{@platform} "
+      end
+
       if @clean
         build_line += "clean "
       end
 
-      build_line += "build"
+      build_line += "build "
+
+      if @test
+        build_line += "test"
+      end
     end
 
     def run_build(build_line)
