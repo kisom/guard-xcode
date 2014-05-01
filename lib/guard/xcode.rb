@@ -101,8 +101,9 @@ module Guard
       res = $?
 
       if not ((not 0 == res or output =~ /errors? generated/) or (output =~ /warnings? generated/))
+        success_message = @test ? "Build succeeded!" : "All Tests Passed!"
         UI.info "guard-xcode: Build succeeded!" unless @quiet or @suppress_all_output
-        Notifier.notify("Build succeeded!") unless @quiet or @suppress_all_output
+        Notifier.notify(success_message) unless @quiet or @suppress_all_output
       end
 
       unless @quiet or @suppress_all_output
