@@ -25,7 +25,9 @@ module Guard
       @workspace = options[:workspace] unless @all
       @quiet = options[:quiet] or false
       @clean = options[:clean] or false
-
+      @destination = options[:destination] unless @all
+      @platform = options[:platform] unless @all
+      @test = options[:test] or false
     end
 
     def get_build_line
@@ -60,12 +62,24 @@ module Guard
       unless nil == @sdk
         build_line += "-sdk #{@sdk} "
       end
+
+      unless nil == @destination
+        build_line += "-destination #{@destination} "
+      end
       
+      unless nil == @platform
+        build_line += "-platform #{@platform} "
+      end
+
       if @clean
         build_line += "clean "
       end
 
-      build_line += "build"
+      build_line += "build "
+
+      if @test
+        build_line += "test"
+      end
     end
 
     def run_build(build_line)
@@ -82,13 +96,13 @@ module Guard
         UI.info "guard-xcode: starting build"
         Notifier.notify("kicking off build with:\n#{build_line}", :image => :pending)
       end
-
       output = `#{build_line} 2>&1`
       res = $?
 
       if not ((not 0 == res or output =~ /errors? generated/) or (output =~ /warnings? generated/))
-        UI.info "guard-xcode: Build succeeded!" unless @quiet or @suppress_all_output
-        Notifier.notify("Build succeeded!") unless @quiet or @suppress_all_output
+        success_message = @test ? "All Tests Passed!" : "Build succeeded!"
+        UI.info "guard-xcode: #{success_message}" unless @quiet or @suppress_all_output
+        Notifier.notify(success_message) unless @quiet or @suppress_all_output
       end
 
       unless @quiet or @suppress_all_output

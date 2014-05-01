@@ -2,6 +2,6 @@
 
 notification :growl
 
-guard :xcode, :configuration => 'Debug', :target => 'MyApp', :clean =>true do
+guard :xcode, :configuration => 'Debug', :target => 'MyApp', :clean =>true, :test =>true do
     watch(/^.+\.[hmc]$/)
 end
