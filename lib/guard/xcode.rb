@@ -96,13 +96,12 @@ module Guard
         UI.info "guard-xcode: starting build"
         Notifier.notify("kicking off build with:\n#{build_line}", :image => :pending)
       end
-
       output = `#{build_line} 2>&1`
       res = $?
 
       if not ((not 0 == res or output =~ /errors? generated/) or (output =~ /warnings? generated/))
-        success_message = @test ? "Build succeeded!" : "All Tests Passed!"
-        UI.info "guard-xcode: Build succeeded!" unless @quiet or @suppress_all_output
+        success_message = @test ? "All Tests Passed!" : "Build succeeded!"
+        UI.info "guard-xcode: #{success_message}" unless @quiet or @suppress_all_output
         Notifier.notify(success_message) unless @quiet or @suppress_all_output
       end
 
